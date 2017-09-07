@@ -20,10 +20,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()			// 所有的请求(排除掉上面放行的)
 					.authenticated()	// 通过认证的任意角色用户可以访问
 				.and()					// 返回 HttpSecurity
-			.formLogin()				// 通过登录进行认证，默认映射为 /login, Spring boot 也会提供一个默认页面
+			.formLogin()				// 配置通过登录页面进行认证，默认映射为 /login, Spring boot 也会提供一个默认页面
 				.permitAll()			// 允许未认证用户访问 /login
 				.and()					// 返回 HttpSecurity
-			.logout()					// 配置注销的支持，默认映射为 /logout
+			.logout()					// 配置注销，默认映射为 /logout
 				.permitAll();			// 允许未认证用户访问 /logout
 	}
 	
