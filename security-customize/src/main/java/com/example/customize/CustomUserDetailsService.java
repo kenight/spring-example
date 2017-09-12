@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		UserEntity user = loadUserBySql();
+		UserEntity user = loadUserBySql(username);
 
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
@@ -34,11 +34,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 	// 模拟从数据库取出 user
-	private UserEntity loadUserBySql() {
+	private UserEntity loadUserBySql(String username) {
+		if (!username.equals("maiyo"))
+			return null;
+
 		UserEntity user = new UserEntity();
 		user.setId(1);
 		user.setUsername("maiyo");
-		user.setPassword(Md5.MD5Encode("123321"));
+		user.setPassword(Md5.MD5Encode("pass"));
 		user.setIsDisable(false);
 
 		Set<String> roles = new HashSet<String>();

@@ -16,7 +16,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() // 关闭 csrf token 验证
-				.authorizeRequests().antMatchers("/my/**").authenticated().and().formLogin().failureUrl("").and() // 使用自定义页面必须定义 loginPage
+				.authorizeRequests().antMatchers("/my/**").authenticated().and()
+				.formLogin().loginPage("/login").and() // 使用自定义页面必须定义 loginPage
 				.logout();
 	}
 
