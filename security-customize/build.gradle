@@ -25,6 +25,7 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
 	compile('org.springframework.boot:spring-boot-starter-security')
+	compile files('libs/xuanmo-core-1.5.RELEASE.jar')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 }
