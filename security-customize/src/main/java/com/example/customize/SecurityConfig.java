@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() // 关闭 csrf token 验证
 				.authorizeRequests().antMatchers("/my/**").authenticated().and()
-				.formLogin().loginPage("/login").and() // 使用自定义页面必须定义 loginPage
+				.formLogin().loginPage("/login").successHandler(customeSuccessHandler()).and() // 使用自定义页面必须定义 loginPage
 				.logout();
 	}
 
@@ -25,10 +25,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService()).passwordEncoder(new Md5PasswordEncoder());
 	}
+	
+	/** 下面 Bean 的注入也可以使用 @Autowired 结合 @Component 进行注入 */
 
 	@Bean
 	public CustomUserDetailsService customUserDetailsService() {
 		return new CustomUserDetailsService();
+	}
+
+	@Bean
+	public CustomeSuccessHandler customeSuccessHandler() {
+		return new CustomeSuccessHandler();
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.example.customize;
 
+import java.util.Date;
 import java.util.Set;
 
 // User 实体
@@ -9,6 +10,7 @@ public class UserEntity {
 	private String username;
 	private String password;
 	private Boolean isDisable;
+	private Date lastLoginTime;
 	private Set<String> roles;
 
 	public Integer getId() {
@@ -41,6 +43,14 @@ public class UserEntity {
 
 	public void setIsDisable(Boolean isDisable) {
 		this.isDisable = isDisable;
+	}
+
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
 	}
 
 	public Set<String> getRoles() {

@@ -1,6 +1,7 @@
 package com.example.customize;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,8 +34,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return new User(user.getUsername(), user.getPassword(), authorities);
 	}
 
-	// 模拟从数据库取出 user
-	private UserEntity loadUserBySql(String username) {
+	// 模拟服务层方法从数据库取出 user
+	public UserEntity loadUserBySql(String username) {
 		if (!username.equals("maiyo"))
 			return null;
 
@@ -43,6 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		user.setUsername("maiyo");
 		user.setPassword(Md5.MD5Encode("pass"));
 		user.setIsDisable(false);
+		user.setLastLoginTime(new Date());
 
 		Set<String> roles = new HashSet<String>();
 		roles.add("USER");
