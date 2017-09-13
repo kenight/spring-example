@@ -1,4 +1,4 @@
-package com.example.customize;
+package com.example.customize.security;
 
 import java.io.IOException;
 import java.util.Date;
@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-public class CustomeSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+import com.example.customize.UserEntity;
+
+public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	
 	// 不改变默认逻辑，只演示增加一些额外操作，对 User 信息的修改
 	

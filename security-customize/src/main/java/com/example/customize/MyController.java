@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.customize.security.CustomUserDetailsService;
+
 // 需要认证后访问的视图
 @Controller
 public class MyController {

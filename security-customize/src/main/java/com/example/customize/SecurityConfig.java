@@ -8,6 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.example.customize.security.CustomCaptchaAuthenticationFilter;
+import com.example.customize.security.CustomSuccessHandler;
+import com.example.customize.security.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -16,8 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() // 关闭 csrf token 验证
+				.addFilterBefore(customCaptchaAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests().antMatchers("/my/**").authenticated().and()
-				.formLogin().loginPage("/login").successHandler(customeSuccessHandler()).and() // 使用自定义页面必须定义 loginPage
+				.formLogin().loginPage("/login").successHandler(customSuccessHandler()).and() // 使用自定义页面必须定义 loginPage
 				.logout();
 	}
 
@@ -25,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService()).passwordEncoder(new Md5PasswordEncoder());
 	}
-	
+
 	/** 下面 Bean 的注入也可以使用 @Autowired 结合 @Component 进行注入 */
 
 	@Bean
@@ -34,8 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public CustomeSuccessHandler customeSuccessHandler() {
-		return new CustomeSuccessHandler();
+	public CustomSuccessHandler customSuccessHandler() {
+		return new CustomSuccessHandler();
+	}
+
+	@Bean
+	public CustomCaptchaAuthenticationFilter customCaptchaAuthenticationFilter() {
+		return new CustomCaptchaAuthenticationFilter();
 	}
 
 }

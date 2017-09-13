@@ -1,4 +1,4 @@
-package com.example.customize;
+package com.example.customize.security;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.example.customize.UserEntity;
 import com.xuanmo.framework.core.common.Md5;
 
 public class CustomUserDetailsService implements UserDetailsService {
