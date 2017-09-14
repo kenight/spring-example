@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public CustomCaptchaAuthenticationFilter customCaptchaAuthenticationFilter() {
+	public CustomCaptchaAuthenticationFilter customCaptchaAuthenticationFilter() throws Exception {
 		return new CustomCaptchaAuthenticationFilter();
 	}
 

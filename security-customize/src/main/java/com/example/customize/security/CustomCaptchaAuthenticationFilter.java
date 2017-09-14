@@ -1,18 +1,32 @@
 package com.example.customize.security;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
-public class CustomCaptchaAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class CustomCaptchaAuthenticationFilter implements Filter {
 
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-		System.out.println("CCC:CustomCaptchaAuthenticationFilter");
-		return super.attemptAuthentication(request, response);
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.out.println("CustomCaptchaAuthenticationFilter");
+		chain.doFilter(request, response);
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
