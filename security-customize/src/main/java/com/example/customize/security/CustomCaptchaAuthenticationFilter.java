@@ -27,6 +27,11 @@ import com.xuanmo.framework.core.common.Captcha;
 // 使用 SimpleUrlAuthenticationFailureHandler 处理失败后的逻辑 (与 UsernamePasswordAuthenticationFilter 相同)
 // 本来直接打算注入 UsernamePasswordAuthenticationFilter 直接使用 RequestMatcher 和 AuthenticationFailureHandler，共享路径等配置
 // 结果发现 WebSecurityConfigurerAdapter 在配置时，以上类都是直接 new 出来后，并未放入 Spring 容器
+
+// 当然还有一种思路是继承 UsernamePasswordAuthenticationFilter
+// 增加额外的验证码检验后，调用父类 attemptAuthentication 的方法进入认证逻辑
+// 将新的 filter 放置到 UsernamePasswordAuthenticationFilter 前面
+// 这样做还必须为新的 filter 注入 UsernamePasswordAuthenticationFilter 所依赖的全部 Bean
 public class CustomCaptchaAuthenticationFilter implements Filter {
 
 	public static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "captcha";
