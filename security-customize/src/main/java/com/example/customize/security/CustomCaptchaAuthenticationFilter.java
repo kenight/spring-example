@@ -8,18 +8,60 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.StringUtils;
+
+import com.xuanmo.framework.core.common.Captcha;
+
+// 自定义过滤器，处理 Captcha
 public class CustomCaptchaAuthenticationFilter implements Filter {
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
+	public static final String SPRING_SECURITY_FORM_CAPTCHA_KEY = "captcha";
 
+	private String failureUrl;
+	private AuthenticationFailureHandler failureHandler;
+	private String captchaParameter = SPRING_SECURITY_FORM_CAPTCHA_KEY;
+	private String loginProcessingUrl;
+	private RequestMatcher requestMatcher;
+
+	public void init(FilterConfig filterConfig) throws ServletException {
+		if (failureUrl == null)
+			failureUrl = "/login?error";
+		this.failureHandler = new SimpleUrlAuthenticationFailureHandler(failureUrl);
+
+		if (loginProcessingUrl == null)
+			loginProcessingUrl = "/login";
+		this.requestMatcher = new AntPathRequestMatcher(loginProcessingUrl, "POST");
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("CustomCaptchaAuthenticationFilter");
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+
+		if (!requestMatcher.matches(request)) {
+			chain.doFilter(request, response);
+			return;
+		}
+
+		String captcha = obtainCaptcha(request);
+
+		try {
+			authentication(captcha, request);
+		} catch (AuthenticationException e) {
+			failureHandler.onAuthenticationFailure(request, response, e);
+			return;
+		}
+
 		chain.doFilter(request, response);
 	}
 
@@ -27,6 +69,42 @@ public class CustomCaptchaAuthenticationFilter implements Filter {
 	public void destroy() {
 		// TODO Auto-generated method stub
 
+	}
+
+	private boolean authentication(String captcha, HttpServletRequest q) {
+		if (!StringUtils.hasText(captcha))
+			throw new BadCaptchaException("NULL CAPTCHA");
+		if (!Captcha.verifyAndClean("session_key_captcha", captcha, q))
+			throw new BadCredentialsException("BAD CAPTCHA");
+		return true;
+	}
+
+	private String obtainCaptcha(HttpServletRequest request) {
+		return request.getParameter(captchaParameter);
+	}
+
+	public String getFailureUrl() {
+		return failureUrl;
+	}
+
+	public void setFailureUrl(String failureUrl) {
+		this.failureUrl = failureUrl;
+	}
+
+	public String getCaptchaParameter() {
+		return captchaParameter;
+	}
+
+	public void setCaptchaParameter(String captchaParameter) {
+		this.captchaParameter = captchaParameter;
+	}
+
+	public String getLoginProcessingUrl() {
+		return loginProcessingUrl;
+	}
+
+	public void setLoginProcessingUrl(String loginProcessingUrl) {
+		this.loginProcessingUrl = loginProcessingUrl;
 	}
 
 }

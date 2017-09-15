@@ -28,7 +28,7 @@
               <label for="captcha"><small class="text-success">Captcha</small></label>
               <div class="input-group">
                 <input type="text" class="form-control" name="captcha" maxlength="6">
-                <span class="input-group-addon captcha"> <a href="javascript:changeCaptcha()"><img id="captcha" src="#" alt="Refresh" title="Change one"></a> </span> </div>
+                <span class="input-group-addon" style="padding:0;background-color:transparent;"> <a href="javascript:changeCaptcha()"><img id="captcha" src="/captcha" alt="Refresh" title="Change one"></a> </span> </div>
             </div>
             <button type="submit" class="btn btn-success btn-block btn-lg">Sign in</button>
           </form>
@@ -37,5 +37,12 @@
     </div>
   </div>
 </div>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+function changeCaptcha() {
+	var randcode = new Date().getTime();
+	$("#captcha").attr("src", "/captcha?captcha=" + randcode);
+}
+</script>
 </body>
 </html>
