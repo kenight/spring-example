@@ -22,10 +22,11 @@ import org.springframework.util.StringUtils;
 import com.xuanmo.framework.core.common.Captcha;
 
 // 自定义过滤器，处理 Captcha
+
 // 参考 UsernamePasswordAuthenticationFilter 类的写法
 // 使用 RequestMatcher 判断拦截请求
 // 使用 SimpleUrlAuthenticationFailureHandler 处理失败后的逻辑 (与 UsernamePasswordAuthenticationFilter 相同)
-// 本来直接打算注入 UsernamePasswordAuthenticationFilter 直接使用 RequestMatcher 和 AuthenticationFailureHandler，共享路径等配置
+// 本来直接打算注入 UsernamePasswordAuthenticationFilter 直接使用 RequestMatcher 和 AuthenticationFailureHandler 共享路径等配置
 // 结果发现 WebSecurityConfigurerAdapter 在配置时，以上类都是直接 new 出来后，并未放入 Spring 容器
 
 // 当然还有一种思路是继承 UsernamePasswordAuthenticationFilter
