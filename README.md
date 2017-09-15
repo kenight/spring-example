@@ -1,5 +1,3 @@
-# spring-security-example
-
 Security-simple
 ---
 
