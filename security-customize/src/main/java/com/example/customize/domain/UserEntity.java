@@ -1,7 +1,6 @@
-package com.example.customize;
+package com.example.customize.domain;
 
 import java.util.Date;
-import java.util.Set;
 
 // User 实体
 public class UserEntity {
@@ -11,7 +10,7 @@ public class UserEntity {
 	private String password;
 	private Boolean isDisable;
 	private Date lastLoginTime;
-	private Set<String> roles;
+	private RoleEntity role;
 
 	public Integer getId() {
 		return id;
@@ -53,12 +52,12 @@ public class UserEntity {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public Set<String> getRoles() {
-		return roles;
+	public RoleEntity getRole() {
+		return role;
 	}
 
-	public void setRoles(Set<String> roles) {
-		this.roles = roles;
+	public void setRole(RoleEntity role) {
+		this.role = role;
 	}
 
 }

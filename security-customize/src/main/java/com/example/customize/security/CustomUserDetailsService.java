@@ -13,7 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.example.customize.UserEntity;
+import com.example.customize.domain.RoleEntity;
+import com.example.customize.domain.UserEntity;
 import com.xuanmo.framework.core.common.Md5;
 
 public class CustomUserDetailsService implements UserDetailsService {
@@ -26,11 +27,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 
+		// 放入角色到 GrantedAuthority 中，该用户如果对应多角色，这里需要循环
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		for (String role : user.getRoles()) {
-			// Spring security GrantedAuthority 默认以 ROLE_ 开头
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-		}
+		authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
 		return new User(user.getUsername(), user.getPassword(), authorities);
 	}
@@ -47,10 +46,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 		user.setIsDisable(false);
 		user.setLastLoginTime(new Date());
 
-		Set<String> roles = new HashSet<String>();
-		roles.add("USER");
+		RoleEntity role = new RoleEntity();
+		role.setId(1);
+		role.setName("ROLE_USER");
+		Set<String> resource = new HashSet<String>();
+		resource.add("/my");
+		resource.add("/my/other");
+		role.setResource(resource);
 
-		user.setRoles(roles);
+		user.setRole(role);
+
 		return user;
 	}
 

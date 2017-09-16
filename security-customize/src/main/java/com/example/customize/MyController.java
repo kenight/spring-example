@@ -28,6 +28,7 @@ public class MyController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		model.addAttribute("username", user.getUsername());
+		model.addAttribute("last", new CustomUserDetailsService().loadUserBySql(user.getUsername()).getLastLoginTime());
 		return "my/index";
 	}
 

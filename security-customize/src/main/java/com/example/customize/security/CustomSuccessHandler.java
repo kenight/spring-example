@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-import com.example.customize.UserEntity;
+import com.example.customize.domain.UserEntity;
 
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	
