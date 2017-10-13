@@ -3,6 +3,7 @@ package com.example.redis.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -51,6 +52,10 @@ public class StudentRepositoryImpl implements StudentRepository {
 			list.add(map.get(id));
 		}
 		return list;
+	}
+
+	public Set<String> keys(Object pattern) {
+		return customizeRedisTemplate.keys(pattern);
 	}
 
 	private HashOperations<String, String, Student> hashOps;

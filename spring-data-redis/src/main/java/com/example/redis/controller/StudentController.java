@@ -1,6 +1,7 @@
 package com.example.redis.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,11 @@ public class StudentController {
 	@GetMapping("/list")
 	public List<Student> list() {
 		return repository.findAll();
+	}
+
+	@GetMapping("/keys")
+	public Set<String> keys(String pattern) {
+		return repository.keys(pattern);
 	}
 
 	@Autowired

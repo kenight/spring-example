@@ -1,6 +1,7 @@
 package com.example.redis.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.redis.domain.Student;
 
@@ -15,5 +16,7 @@ public interface StudentRepository {
 	Student find(String id);
 
 	List<Student> findAll();
+
+	Set<String> keys(Object pattern);
 
 }
