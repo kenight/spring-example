@@ -17,7 +17,7 @@ public class Config {
 
 	@Bean
 	public RedisTemplate customizeRedisTemplate() {
-		// 默认的 KeySerializer 使用 JdkSerializationRedisSerializer 的会出现乱码
+		// 默认的 KeySerializer 使用 JdkSerializationRedisSerializer 会出现乱码
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisTemplate;
 	}
