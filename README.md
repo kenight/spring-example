@@ -1,6 +1,9 @@
+spring-data-redis
+---
+使用 redis 作为 key-value store 的一个简单示例（非cacha）
+
 spring-security-simple
 ---
-
 一个简单的类似官方demo的示例
 
 spring-Security-customize
