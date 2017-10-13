@@ -15,6 +15,17 @@ public class Student implements Serializable {
 		MALE, FEMALE
 	}
 
+	public Student() {
+	}
+
+	public Student(String id, String name, Gender gender, Integer age) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+	}
+
 	public String getId() {
 		return id;
 	}

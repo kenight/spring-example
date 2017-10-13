@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.example.redis.domain.Student;
 
 @Repository
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class StudentRepositoryImpl implements StudentRepository {
 
 	/**
@@ -24,7 +25,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
 	@PostConstruct
 	private void init() {
-		this.hashOps = redisTemplate.opsForHash();
+		this.hashOps = customizeRedisTemplate.opsForHash();
 	}
 
 	public void save(Student student) {
@@ -40,7 +41,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 	}
 
 	public Student find(String id) {
-		return this.hashOps.get(KEY, id);
+		return (Student) this.hashOps.get(KEY, id);
 	}
 
 	public List<Student> findAll() {
@@ -53,7 +54,9 @@ public class StudentRepositoryImpl implements StudentRepository {
 	}
 
 	private HashOperations<String, String, Student> hashOps;
+
+	// 注意:注入的属性名称，如果名称为 redisTemplate 则是原 Spring boot 自动配置的 redisTemplate
 	@Autowired
-	private RedisTemplate<String, Student> redisTemplate;
+	private RedisTemplate customizeRedisTemplate;
 
 }
