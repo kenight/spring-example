@@ -1,9 +1,9 @@
-Security-simple
+spring-security-simple
 ---
 
 一个简单的类似官方demo的示例
 
-Security-customize
+spring-Security-customize
 ---
 一个稍微复杂一点的示例
 
